@@ -1,10 +1,7 @@
 package guru.springframework.spring5webapp.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Objects;
+import javax.persistence.*;
+import java.util.*;
 
 @Entity
 public class Publisher {
@@ -19,6 +16,10 @@ public class Publisher {
     private String state;
     private String zip;
 
+    @OneToMany // create one to many relationship with Book entity
+    @JoinColumn(name = "publisher_id") // create a forign key 'publisher_id' on Book
+    private Set<Book> books = new HashSet<>();
+
     public Publisher() {
     }
 
@@ -28,6 +29,14 @@ public class Publisher {
         this.city = city;
         this.state = state;
         this.zip = zip;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     public Long getId() {
